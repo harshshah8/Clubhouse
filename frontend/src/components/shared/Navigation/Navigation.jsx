@@ -20,7 +20,7 @@ const Navigation = () => {
         <nav className={`${styles.navbar} container`}>
             <Link style={brandStyle} to="/">
                 <img src="/images/logo.png" alt="logo" />
-                <span style={logoText}>Clubhouse</span>
+                <span style={logoText}>Codershouse</span>
             </Link>
         </nav>
     );

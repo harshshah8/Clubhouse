@@ -1,0 +1,12 @@
+---
+- name: Deploying Project.
+  hosts: all
+  tasks:
+    - name: Pull Frontend image
+      docker_image:
+        name: vinayakkgarg/clubhouse_frontend
+        source: pull
+    - name: Pull Backend image
+      docker_image:
+        name: vinayakkgarg/clubhouse_backend
+        source: pull

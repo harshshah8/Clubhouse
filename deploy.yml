@@ -10,3 +10,5 @@
       docker_image:
         name: vinayakkgarg/clubhouse_backend
         source: pull
+      vars:
+        ansible_python_interpreter: /bin/python3

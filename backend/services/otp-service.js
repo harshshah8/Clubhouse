@@ -1,3 +1,4 @@
+require('dotenv').config();
 const crypto = require('crypto');
 const hashService = require('./hash-service');
 
@@ -13,13 +14,13 @@ class OtpService {
         return otp;
     }
 
-    async sendBySms(phone, otp) {
-        return await twilio.messages.create({
-            to: phone,
-            from: process.env.SMS_FROM_NUMBER,
-            body: `Your clubhouse OTP is ${otp}`,
-        });
-    }
+    // async sendBySms(phone, otp) {
+    //     return await twilio.messages.create({
+    //         to: phone,
+    //         from: process.env.SMS_FROM_NUMBER,
+    //         body: `Your clubhouse OTP is ${otp}`,
+    //     });
+    // }
 
     verifyOtp(hashedOtp, data) {
         let computedHash = hashService.hashOtp(data);

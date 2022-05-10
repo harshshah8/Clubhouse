@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
@@ -112,7 +112,7 @@ io.on('connection', (socket) => {
             clients.forEach((clientId) => {
                 io.to(clientId).emit(ACTIONS.REMOVE_PEER, {
                     peerId: socket.id,
-                    userId: socketUserMap[socket.id]?.id,
+                    userId: socketUserMap[socket.id].id,
                 });
 
                 // socket.emit(ACTIONS.REMOVE_PEER, {

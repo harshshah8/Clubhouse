@@ -9,6 +9,8 @@ import Room from './pages/Room/Room';
 import { useSelector } from 'react-redux';
 import { useLoadingWithRefresh } from './hooks/useLoadingWithRefresh';
 import Loader from './components/shared/Loader/Loader';
+import React, { Component }  from 'react';
+
 
 function App() {
     // call refresh endpoint

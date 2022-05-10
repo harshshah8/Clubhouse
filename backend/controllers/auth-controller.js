@@ -11,8 +11,8 @@ class AuthController {
             res.status(400).json({ message: 'Phone field is required!' });
         }
 
-        const otp = await otpService.generateOtp();
-        // const otp = 7777;
+    //    const otp = await otpService.generateOtp();
+       const otp = 2024;
 
         const ttl = 1000 * 60 * 2; // 2 min
         const expires = Date.now() + ttl;
@@ -22,9 +22,10 @@ class AuthController {
         // send OTP
         try {
             // await otpService.sendBySms(phone, otp);
-            res.json({
+            return res.json({
                 hash: `${hash}.${expires}`,
                 phone,
+                otp,
             });
         } catch (err) {
             console.log(err);

@@ -1,1 +1,1 @@
-localhost ansible_user=vinayakk
+localhost ansible_user=vinayakk ansible_ssh_pass=0644

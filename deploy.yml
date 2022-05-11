@@ -10,7 +10,7 @@
     - name: Copying the docker compose file
       copy:
         src: ./docker-compose.yml
-        dest: ./
+        dest: ./backend/
 
     - name: Starting the application
       shell: docker-compose up -d

@@ -3,6 +3,7 @@ const hashService = require('../services/hash-service');
 const userService = require('../services/user-service');
 const tokenService = require('../services/token-service');
 const UserDto = require('../dtos/user-dto');
+const logger = require('../logger');
 
 class AuthController {
     async sendOtp(req, res) {
@@ -20,7 +21,12 @@ class AuthController {
         const hash = hashService.hashOtp(data);
 
         // send OTP
+        
         try {
+            logger.log({
+                level: "info",
+                message: "LogIn Called",
+              });
             // await otpService.sendBySms(phone, otp);
             return res.json({
                 hash: `${hash}.${expires}`,
@@ -28,6 +34,10 @@ class AuthController {
                 otp,
             });
         } catch (err) {
+            logger.log({
+                level: "erroe",
+                message: "LogIn Failed",
+              });
             console.log(err);
             res.status(500).json({ message: 'message sending failed' });
         }
@@ -36,6 +46,10 @@ class AuthController {
     async verifyOtp(req, res) {
         const { otp, hash, phone } = req.body;
         if (!otp || !hash || !phone) {
+            logger.log({
+                level: "error",
+                message: "Fields are missing",
+              });
             res.status(400).json({ message: 'All fields are required!' });
         }
 
@@ -47,16 +61,29 @@ class AuthController {
         const data = `${phone}.${otp}.${expires}`;
         const isValid = otpService.verifyOtp(hashedOtp, data);
         if (!isValid) {
+            logger.log({
+                level: "error",
+                message: "Wrong OTP",
+              });
             res.status(400).json({ message: 'Invalid OTP' });
         }
 
         let user;
         try {
+            logger.log({
+                level: "info",
+                message: "Successfully LoggedIn",
+              });
             user = await userService.findUser({ phone });
             if (!user) {
+                
                 user = await userService.createUser({ phone });
             }
         } catch (err) {
+            logger.log({
+                level: "error",
+                message: "Database Error",
+              });
             console.log(err);
             res.status(500).json({ message: 'Db error' });
         }
@@ -138,6 +165,10 @@ class AuthController {
     }
 
     async logout(req, res) {
+        logger.log({
+            level: "info",
+            message: "LogOut Called",
+          });
         const { refreshToken } = req.cookies;
         // delete refresh token from db
         await tokenService.removeToken(refreshToken);

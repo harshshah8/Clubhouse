@@ -1,9 +1,15 @@
 const RoomDto = require('../dtos/room.dto');
 const roomService = require('../services/room-service');
+const logger = require('../logger');
 
 class RoomsController {
     async create(req, res) {
+        
         // room
+        logger.log({
+            level: "info",
+            message: "Room is created",
+          });
         const { topic, roomType } = req.body;
 
         if (!topic || !roomType) {

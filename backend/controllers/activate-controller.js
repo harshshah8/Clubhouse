@@ -2,12 +2,17 @@ const Jimp = require('jimp');
 const path = require('path');
 const userService = require('../services/user-service');
 const UserDto = require('../dtos/user-dto');
+const logger = require('../logger');
 
 class ActivateController {
     async activate(req, res) {
         // Activation logic
         const { name, avatar } = req.body;
         if (!name || !avatar) {
+            logger.log({
+                level: "error",
+                message: "Fields are missing",
+              });
             res.status(400).json({ message: 'All fields are required!' });
         }
 
@@ -21,7 +26,13 @@ class ActivateController {
         )}.png`;
         // 32478362874-3242342342343432.png
 
+        
+
         try {
+            logger.log({
+                level: "info",
+                message: "Photo is added",
+              });
             const jimResp = await Jimp.read(buffer);
             jimResp
                 .resize(150, Jimp.AUTO)
